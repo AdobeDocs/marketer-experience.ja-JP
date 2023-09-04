@@ -3,9 +3,9 @@ user-guide-title: マーケターエクスペリエンス
 breadcrumb-title: マーケターエクスペリエンス
 user-guide-description: マーケターエクスペリエンスユーザーガイド。
 source-git-commit: a3eef4938f645e4db1db335aa36d988c93921f18
-workflow-type: tm+mt
+workflow-type: ht
 source-wordcount: '21'
-ht-degree: 9%
+ht-degree: 100%
 
 ---
 
