@@ -3,9 +3,9 @@ title: 単一イベント
 description: こちらは、ジャーニー検証の「[!UICONTROL 単一イベント]」タイプをシミュレートするための説明ページです。
 exl-id: 314f967c-e10f-4832-bdba-901424dc2eeb
 source-git-commit: 194667c26ed002be166ab91cc778594dc1f09238
-workflow-type: tm+mt
+workflow-type: ht
 source-wordcount: '889'
-ht-degree: 37%
+ht-degree: 100%
 
 ---
 
@@ -33,8 +33,8 @@ ht-degree: 37%
 
 >[!TIP]
 >
->ターミナルを使用してカールを実行する場合は、カールを実行する前に変数値を設定できるので、個々のカールでこれらの値を置き換える必要はありません。
->例： `ORG_ID=************@AdobeOrg`を指定した場合、シェルは `$ORG_ID` の値を使用して、以下のカールをコピー、貼り付け、実行できます。変更は必要ありません。
+>ターミナルを使用して cURL を実行する場合は、cURL を実行する前に変数値を設定できるので、個々の cURL でこれらの値を置き換える必要はありません。
+>例えば、`ORG_ID=************@AdobeOrg` を設定すると、シェルはすべての `$ORG_ID` をその値に自動的に置き換えるので、以下の cURL を変更せずにコピー、ペーストおよび実行できます。
 >
 > このドキュメント全体で次の変数が使用されます
 >
@@ -52,7 +52,7 @@ ht-degree: 37%
 >
 > PROFILE_DATASET_ID
 >
-> ジャーニーID
+> JOURNEY_ID
 >
 > PROFILE_BASE_CONNECTION_ID
 >
@@ -68,7 +68,7 @@ ht-degree: 37%
 >
 > CUSTOMER_LAST_NAME
 >
-> 電子メール
+> EMAIL
 >
 > EVENT_SCHEMA_REF
 >
@@ -102,7 +102,7 @@ ht-degree: 37%
 
 1. **cURL の使用**
 
-   1. ジャーニーを公開します。 応答には、次の手順でジャーニーの公開ステータスを取得するために必要なジョブ ID が含まれます。
+   1. ジャーニーを公開します。応答には、次の手順でジャーニー公開ステータスを取得するために必要なジョブ ID が含まれます。
 
       ```bash
       curl --location --request POST "https://journey-private.adobe.io/authoring/jobs/journeyVersions/$JOURNEY_ID/deploy" \
@@ -114,7 +114,7 @@ ht-degree: 37%
       --header "Content-Type: application/json" 
       ```
 
-   1. ジャーニーの公開には時間がかかる場合があるので、cURL の下で実行されるステータスを確認するには、 `response.status` 次に該当 `SUCCESS`に設定する場合は、必ず 10～15 秒待ってください（ジャーニーの公開に時間がかかる場合）。
+   1. ジャーニーの公開には時間がかかる場合があるので、ステータスを確認するには、`response.status` が `SUCCESS` になるまで、cURL の下で実行します。ジャーニーの公開に時間がかかる場合は、10～15 秒待機する必要があります。
 
       ```bash
       curl --location "https://journey-private.adobe.io/authoring/jobs/$JOB_ID" \
@@ -129,9 +129,9 @@ ht-degree: 37%
 
 >[!TIP]
 >
->メールプロバイダーがプラスメールをサポートしている場合は、同じメールアドレスを `+<variable>` を電子メールに追加します（例： ）。 `usertest@email.com` ～として再利用できる `usertest+v1@email.com` または `usertest+24jul@email.com`. これは、同じメール ID を使用しながら、毎回新しいプロファイルを作成するのに役立ちます。
+>メールプロバイダーがプラスメールをサポートしている場合は、メールに `+<variable>` を追加することで、同じメールアドレスを再利用できます。例えば、`usertest@email.com` は、`usertest+v1@email.com` または `usertest+24jul@email.com` として再利用できます。これは、同じメール ID を使用しながら、毎回新しいプロファイルを作成するのに役立ちます。
 >
->P.S: Plus E メールは設定可能な機能で、E メールプロバイダーのサポートが必要です。 テストに使用する前に、メールを受信できるかどうかを確認してください。
+>P.S：プラスメールは設定可能な機能で、メールプロバイダーによってサポートされる必要があります。テストで使用する前に、このようなアドレスでメールを受信できるかどうかを確認してください。
 
 1. 初めてのユーザーは、**[!DNL customer dataset]** と **[!DNL HTTP Streaming Inlet Connection]** を作成する必要があります。
 1. 既に **[!DNL customer dataset]** と **[!DNL HTTP Streaming Inlet Connection]** を作成している場合は、手順 `5` に進んでください。
@@ -166,9 +166,9 @@ ht-degree: 37%
    }'
    ```
 
-   応答は次の形式になります。 `"@/dataSets/<PROFILE_DATASET_ID>"`.
+   応答の形式は、`"@/dataSets/<PROFILE_DATASET_ID>"` です。
 
-1. 作成 **[!DNL HTTP Streaming Inlet Connection]** を次の手順の助けを借りて。
+1. 次の手順に従って **[!DNL HTTP Streaming Inlet Connection]** を作成します。
    1. ベース接続を作成します。
 
       ```bash
@@ -194,7 +194,7 @@ ht-degree: 37%
       }'
       ```
 
-      応答からベース接続 ID を取得し、次の代わりに使用します。 `PROFILE_BASE_CONNECTION_ID` 次の cURL に含まれる
+      応答からベース接続 ID を取得し、次の cURL で `PROFILE_BASE_CONNECTION_ID` の代わりに使用します
 
    1. ソース接続を作成します。
 
@@ -216,7 +216,7 @@ ht-degree: 37%
       }'
       ```
 
-      応答からソース接続 ID を取得し、次の代わりに使用します。 `PROFILE_SOURCE_CONNECTION_ID`
+      応答からソース接続 ID を取得し、`PROFILE_SOURCE_CONNECTION_ID` の代わりに使用します
 
    1. ターゲット接続を作成します。
 
@@ -248,7 +248,7 @@ ht-degree: 37%
       }'
       ```
 
-      応答からターゲット接続 ID を取得し、 `PROFILE_TARGET_CONNECTION_ID`
+      応答からターゲット接続 ID を取得し、`PROFILE_TARGET_CONNECTION_ID` の代わりに使用します
 
    1. データフローを作成します。
 
@@ -275,7 +275,7 @@ ht-degree: 37%
       }'
       ```
 
-   1. 基本接続を取得します。 結果には、プロファイルデータを送信するために必要な inletUrl が含まれます。
+   1. ベース接続を取得します。結果には、プロファイルデータの送信に必要な inletUrl が含まれます。
 
       ```bash
       curl --location "https://platform.adobe.io/data/foundation/flowservice/connections/$PROFILE_BASE_CONNECTION_ID" \
@@ -286,17 +286,17 @@ ht-degree: 37%
       --header "x-api-key: $API_KEY"
       ```
 
-      応答から inletUrl を取得し、の代わりに使用します。 `PROFILE_INLET_URL`
+      応答から inletUrl を取得し、`PROFILE_INLET_URL` の代わりに使用します
 
-1. このステップでは、ユーザーは `PROFILE_DATASET_ID` および `PROFILE_INLET_URL`；そうでない場合は、手順を参照してください。 `3` または `4` それぞれ。
-1. 顧客を取り込むには、ユーザーは `CUSTOMER_MOBILE_NUMBER`, `CUSTOMER_FIRST_NAME`, `CUSTOMER_LAST_NAME` および `EMAIL` （cURL の下）
+1. この手順では、ユーザーは `PROFILE_DATASET_ID` と `PROFILE_INLET_URL` の値を設定する必要があります。設定しない場合は、手順 `3` または `4` をそれぞれ参照してください。
+1. 顧客を取得するには、以下の cURL の `CUSTOMER_MOBILE_NUMBER`、`CUSTOMER_FIRST_NAME`、`CUSTOMER_LAST_NAME` および `EMAIL` を置き換える必要があります。
 
    1. `CUSTOMER_MOBILE_NUMBER` は、携帯電話番号（`+1 000-000-0000` など）になります
    1. `CUSTOMER_FIRST_NAME` は、ユーザーの名になります
    1. `CUSTOMER_LAST_NAME` は、ユーザーの姓になります
    1. `EMAIL` は、ユーザーのメールアドレスになります。これは、新しいプロファイルを取得できるように個別のメール ID を使用するために重要です。
 
-1. 最後に、curl を実行して、顧客プロファイルを取り込みます。 更新 `body.xdmEntity.consents.marketing.preferred` から `email`, `sms`または `push` 検証するチャネルに基づいて また、対応する `val` から `y`.
+1. 最後に、cURL を実行して、顧客プロファイルを取得します。検証するチャネルに基づいて、`body.xdmEntity.consents.marketing.preferred` を `email`、`sms` または `push` に更新します。また、対応する `val` を `y` に設定します。
 
    ```bash
    curl --location "$PROFILE_INLET_URL?synchronousValidation=true" \
@@ -354,7 +354,7 @@ ht-degree: 37%
    }'
    ```
 
-## 取り込みジャーニートリガーイベント
+## ジャーニートリガーイベントの取得
 
 1. 初めてのユーザーは、**[!DNL event dataset]** と **[!DNL HTTP Streaming Inlet Connection for events]** を作成する必要があります
 1. 既に **[!DNL event dataset]** と **[!DNL HTTP Streaming Inlet Connection for events]** を作成している場合は、手順 `5` に進んでください。
@@ -389,9 +389,9 @@ ht-degree: 37%
    }'
    ```
 
-   応答は次の形式になります。 `"@/dataSets/<EVENT_DATASET_ID>"`
+   応答の形式は、`"@/dataSets/<EVENT_DATASET_ID>"` です。
 
-1. 作成 **[!DNL HTTP Streaming Inlet Connection for events]**  を次の手順の助けを借りて。
+1. 次の手順に従って **[!DNL HTTP Streaming Inlet Connection for events]** を作成します。
    <!-- TODO: Is the name unique? If so, we may need to generate and provide in variables.txt-->
    1. ベース接続を作成します。
 
@@ -418,7 +418,7 @@ ht-degree: 37%
       }'
       ```
 
-      応答からベース接続 ID を取得し、次の代わりに使用します。 `EVENT_BASE_CONNECTION_ID`
+      応答からベース接続 ID を取得し、`EVENT_BASE_CONNECTION_ID` の代わりに使用します
 
    1. ソース接続を作成します。
 
@@ -440,7 +440,7 @@ ht-degree: 37%
       }'
       ```
 
-      応答からソース接続 ID を取得し、次の代わりに使用します。 `EVENT_SOURCE_CONNECTION_ID`
+      応答からソース接続 ID を取得し、`EVENT_SOURCE_CONNECTION_ID` の代わりに使用します
 
    1. ターゲット接続を作成します。
 
@@ -472,7 +472,7 @@ ht-degree: 37%
       }'
       ```
 
-      応答からターゲット接続 ID を取得し、 `EVENT_TARGET_CONNECTION_ID`
+      応答からターゲット接続 ID を取得し、`EVENT_TARGET_CONNECTION_ID` の代わりに使用します
 
    1. データフローを作成します。
 
@@ -499,7 +499,7 @@ ht-degree: 37%
       }'
       ```
 
-   1. 基本接続を取得します。 結果には、プロファイルデータを送信するために必要な inletUrl が含まれます。
+   1. ベース接続を取得します。結果には、プロファイルデータの送信に必要な inletUrl が含まれます。
 
    ```bash
    curl --location "https://platform.adobe.io/data/foundation/flowservice/connections/$EVENT_BASE_CONNECTION_ID" \
@@ -510,14 +510,14 @@ ht-degree: 37%
        --header "Content-Type: application/json" 
    ```
 
-   応答から inletUrl を取得し、の代わりに使用します。 `EVENT_INLET_URL`
+   応答から inletUrl を取得し、`EVENT_INLET_URL` の代わりに使用します
 
-1. このステップでは、ユーザーは `EVENT_DATASET_ID` および `EVENT_INLET_URL`；そうでない場合は、手順を参照してください。 `3` または `4` それぞれ。
-1. イベントを取り込むには、ユーザーが時間変数を変更する必要があります `TIMESTAMP` 以下の cURL のリクエスト本文。
+1. この手順では、ユーザーは `EVENT_DATASET_ID` と `EVENT_INLET_URL` の値を設定する必要があります。設定しない場合は、手順 `3` または `4` をそれぞれ参照してください。
+1. イベントを取得するには、ユーザーは以下の cURL のリクエスト本文にある時間変数 `TIMESTAMP` を変更する必要があります。
 
-   1. 置換 `body.xdmEntity` ダウンロードされたイベント json の内容を含む
-   1. `TIMESTAMP` イベントが発生した時刻には、タイムスタンプを UTC タイムゾーンで使用します（例： ）。 `2023-09-05T23:57:00.071+00:00`.
-   1. 変数に一意の値を設定する `UNIQUE_EVENT_ID`.
+   1. `body.xdmEntity` をダウンロードしたイベント JSON の内容に置き換えます。
+   1. `TIMESTAMP` では、イベントの発生時刻に UTC タイムゾーンのタイムスタンプ（例：`2023-09-05T23:57:00.071+00:00`）を使用します。
+   1. 変数 `UNIQUE_EVENT_ID` に一意の値を設定します。
 
    ```bash
    curl --location "$EVENT_INLET_URL?synchronousValidation=true" \
